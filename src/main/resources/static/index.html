@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corporate Knowledge Assist — Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+
+<div class="auth-split">
+
+    <!-- Left Panel — Brand -->
+    <div class="auth-brand">
+        <div class="brand-content">
+            <div class="brand-logo">
+                <div class="logo-icon">⚡</div>
+                <span class="logo-text">KnowledgeAssist</span>
+            </div>
+            <h1 class="brand-headline">Your company's knowledge,<br>answered instantly.</h1>
+            <p class="brand-sub">Upload policy documents, HR manuals, and SOPs. Let employees find answers in seconds - no more email chains.</p>
+            <div class="brand-stats">
+                <div class="stat">
+                    <span class="stat-number">PDF</span>
+                    <span class="stat-label">Document Upload</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">AI</span>
+                    <span class="stat-label">Powered Answers</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number">JWT</span>
+                    <span class="stat-label">Secure Access</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Panel — Form -->
+    <div class="auth-form-panel">
+        <div class="auth-form-container">
+
+            <div class="form-header">
+                <h2>Welcome back</h2>
+                <p>Sign in to your account to continue</p>
+            </div>
+
+            <!-- Tab Switch -->
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+                <button class="tab-btn" onclick="switchTab('register')">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="auth-form active" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="you@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('loginPassword')">👁</button>
+                    </div>
+                </div>
+                <div id="loginError" class="form-error hidden"></div>
+                <button type="submit" class="btn-primary" id="loginBtn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-loader hidden">Signing in...</span>
+                </button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" class="auth-form" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" placeholder="you@company.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password</label>
+                    <div class="input-with-icon">
+                        <input type="password" id="regPassword" placeholder="Min. 6 characters" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('regPassword')">👁</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regRole">Role</label>
+                    <select id="regRole">
+                        <option value="EMPLOYEE">Employee</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </div>
+                <div id="registerError" class="form-error hidden"></div>
+                <div id="registerSuccess" class="form-success hidden"></div>
+                <button type="submit" class="btn-primary" id="registerBtn">
+                    <span class="btn-text">Create Account</span>
+                    <span class="btn-loader hidden">Creating...</span>
+                </button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat — KnowledgeAssist</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+</head>
+<body class="app-page">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">KnowledgeAssist</span>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="admin.html" class="nav-item" id="adminNavLink">
+            <span class="nav-icon">📁</span>
+            <span>Documents</span>
+        </a>
+        <a href="chat.html" class="nav-item active">
+            <span class="nav-icon">💬</span>
+            <span>Chat</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">E</div>
+            <div class="user-details">
+                <span class="user-name" id="sidebarUserName">Employee</span>
+                <span class="user-role" id="sidebarUserRole">Employee</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+</aside>
+
+<!-- Chat Layout -->
+<main class="chat-layout">
+
+    <!-- Chat Header -->
+    <header class="chat-header">
+        <div class="chat-header-info">
+            <div class="ai-avatar">🤖</div>
+            <div>
+                <h2>Knowledge Assistant</h2>
+                <span class="online-status">● Online — Powered by AI</span>
+            </div>
+        </div>
+        <button class="btn-clear-chat" onclick="clearChat()">Clear Chat</button>
+    </header>
+
+    <!-- Messages Area -->
+    <div class="chat-messages" id="chatMessages">
+
+        <!-- Welcome Message -->
+        <div class="message ai-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+                <div class="message-bubble">
+                    <p>Hello! I'm your corporate knowledge assistant. Ask me anything about company policies, leave rules, procedures, or any topic covered in the uploaded documents.</p>
+                    <p class="message-hint">Try asking: <em>"How many casual leaves are allowed?"</em> or <em>"What is the work from home policy?"</em></p>
+                </div>
+                <span class="message-time">Just now</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Suggested Questions -->
+    <div class="suggestions" id="suggestions">
+        <button class="suggestion-chip" onclick="askSuggestion(this)">How many casual leaves are allowed?</button>
+        <button class="suggestion-chip" onclick="askSuggestion(this)">What is the work from home policy?</button>
+        <button class="suggestion-chip" onclick="askSuggestion(this)">What are the office working hours?</button>
+        <button class="suggestion-chip" onclick="askSuggestion(this)">How to apply for medical leave?</button>
+    </div>
+
+    <!-- Input Area -->
+    <div class="chat-input-area">
+        <div class="chat-input-box">
+                <textarea
+                        id="questionInput"
+                        placeholder="Ask anything about company policies..."
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                        oninput="autoResize(this)">
+                </textarea>
+            <button class="btn-send" id="sendBtn" onclick="sendMessage()">
+                <span id="sendIcon">➤</span>
+                <span id="sendLoader" class="hidden">⏳</span>
+            </button>
+        </div>
+        <p class="input-hint">Press Enter to send · Shift+Enter for new line</p>
+    </div>
+
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/chat.js"></script>
+</body>
+</html>

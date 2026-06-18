@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — KnowledgeAssist</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
+</head>
+<body class="app-page">
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">⚡</div>
+        <span class="logo-text">KnowledgeAssist</span>
+    </div>
+    <nav class="sidebar-nav">
+        <a href="admin.html" class="nav-item active">
+            <span class="nav-icon">📁</span>
+            <span>Documents</span>
+        </a>
+        <a href="chat.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Chat</span>
+        </a>
+    </nav>
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar" id="userAvatar">A</div>
+            <div class="user-details">
+                <span class="user-name" id="sidebarUserName">Admin</span>
+                <span class="user-role">Administrator</span>
+            </div>
+        </div>
+        <button class="btn-logout" onclick="logout()">Sign Out</button>
+    </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main-content">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <h1 class="page-title">Knowledge Base</h1>
+            <p class="page-subtitle">Upload and manage company documents</p>
+        </div>
+        <div class="topbar-right">
+            <div class="badge-admin">ADMIN</div>
+        </div>
+    </header>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <div class="upload-card">
+            <div class="upload-area" id="uploadArea"
+                 ondrop="handleDrop(event)"
+                 ondragover="handleDragOver(event)"
+                 ondragleave="handleDragLeave(event)">
+                <div class="upload-icon">📄</div>
+                <h3>Drop your PDF here</h3>
+                <p>or click to browse files</p>
+                <input type="file" id="pdfInput" accept=".pdf" onchange="handleFileSelect(event)" hidden>
+                <button class="btn-outline" onclick="document.getElementById('pdfInput').click()">
+                    Browse PDF
+                </button>
+                <span class="upload-hint">Maximum file size: 20MB</span>
+            </div>
+
+            <!-- Selected File Preview -->
+            <div class="file-preview hidden" id="filePreview">
+                <div class="file-info">
+                    <span class="file-icon">📄</span>
+                    <div class="file-details">
+                        <span class="file-name" id="selectedFileName"></span>
+                        <span class="file-size" id="selectedFileSize"></span>
+                    </div>
+                    <button class="btn-remove" onclick="clearFile()">✕</button>
+                </div>
+                <button class="btn-primary" id="uploadBtn" onclick="uploadPdf()">
+                    <span class="btn-text">Upload to Knowledge Base</span>
+                    <span class="btn-loader hidden">Uploading...</span>
+                </button>
+            </div>
+
+            <!-- Upload Progress -->
+            <div class="upload-progress hidden" id="uploadProgress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">Processing PDF...</span>
+            </div>
+
+            <!-- Upload Result -->
+            <div id="uploadResult"></div>
+        </div>
+    </section>
+
+    <!-- Documents List -->
+    <section class="documents-section">
+        <div class="section-header">
+            <h2>Uploaded Documents</h2>
+            <button class="btn-refresh" onclick="loadDocuments()">↻ Refresh</button>
+        </div>
+
+        <div id="documentsContainer">
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading documents...</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<script src="../js/config.js"></script>
+<script src="../js/admin.js"></script>
+</body>
+</html>

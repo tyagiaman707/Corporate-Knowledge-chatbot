@@ -31,7 +31,19 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
 
     private static final String[] PUBLIC_URLS = {
+            // ── Auth APIs ──────────────────────────────
             "/api/auth/**",
+            // ── Static frontend files ──────────────────
+            "/",
+            "/index.html",
+            "/pages/**",
+            "/css/**",
+            "/js/**",
+            "/images/**",
+            "/*.ico",
+            "/*.png",
+            "/*.svg",
+            // ── Swagger (optional) ─────────────────────
             "/v3/api-docs/**",
             "/swagger-ui/**"
     };
@@ -43,7 +55,6 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // ✅ Spring Security 6: pass UserDetailsService via constructor
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(customUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
@@ -61,7 +72,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173"));
+                    config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173", "http://localhost:8081"));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
