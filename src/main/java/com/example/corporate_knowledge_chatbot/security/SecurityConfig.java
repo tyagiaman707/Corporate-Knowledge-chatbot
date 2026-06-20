@@ -31,9 +31,9 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
 
     private static final String[] PUBLIC_URLS = {
-            // ── Auth APIs ──────────────────────────────
+            // ── Auth APIs ──────────────────────────────────
             "/api/auth/**",
-            // ── Static frontend files ──────────────────
+            // ── Static frontend files ──────────────────────
             "/",
             "/index.html",
             "/pages/**",
@@ -43,7 +43,7 @@ public class SecurityConfig {
             "/*.ico",
             "/*.png",
             "/*.svg",
-            // ── Swagger (optional) ─────────────────────
+            // ── Swagger ────────────────────────────────────
             "/v3/api-docs/**",
             "/swagger-ui/**"
     };
@@ -69,10 +69,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // ── Disable CSRF (REST API + JWT = no CSRF needed) ──
                 .csrf(AbstractHttpConfigurer::disable)
+
+                // ── Allow Railway proxy headers ───────────────────────
+                .headers(headers -> headers
+                        .frameOptions(frame -> frame.sameOrigin())
+                )
+
+                // ── CORS — allow Railway domain + localhost ───────────
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:5173", "http://localhost:8081"));
+                    config.setAllowedOriginPatterns(List.of("*")); // allow all origins
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true);
@@ -80,12 +88,16 @@ public class SecurityConfig {
                     source.registerCorsConfiguration("/**", config);
                     return source.getCorsConfiguration(request);
                 }))
+
+                // ── Authorization rules ───────────────────────────────
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PUBLIC_URLS).permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/chat/**").hasAnyRole("EMPLOYEE", "ADMIN")
                         .anyRequest().authenticated()
                 )
+
+                // ── Stateless session (JWT) ───────────────────────────
                 .sessionManagement(sess -> sess
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
