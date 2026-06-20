@@ -2,7 +2,7 @@
 //  config.js — Shared configuration and utilities
 // ============================================================
 
-const API_BASE = 'http://localhost:8081';
+const API_BASE = 'https://corporate-knowledge-chatbot-production.up.railway.app';
 
 // ── Token helpers ────────────────────────────────────────────
 const Auth = {
